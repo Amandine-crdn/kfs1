@@ -3,7 +3,7 @@ CC = gcc
 LD = ld
 
 # Compilation en 32 bits (m32 pour l'architecture 32 bits)
-CFLAGS = -m32 -fno-builtin -fno-exceptions -fno-stack-protector -nostdlib -nodefaultlibs
+CFLAGS = -m32 -fno-builtin -fno-exceptions -fno-stack-protector -fno-rtti -nostdlib -nodefaultlibs
 LDFLAGS = -m elf_i386 -T linker.ld
 
 BOOT_SRC = asm/boot.asm
