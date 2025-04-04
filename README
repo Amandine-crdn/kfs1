@@ -105,4 +105,4 @@ Crée l'image ISO à la fin
 
 # 8. Tester et déboguer le noyau
 
-qemu-system-x86_64 -kernel kernel.bin
+qemu-system-x86_64 -cdrom iso/my-kernel.iso -m 512 -smp 2

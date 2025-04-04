@@ -22,13 +22,14 @@ all: my-kernel.iso
 
 # Création de l'image ISO
 my-kernel.iso: $(KERNEL_BIN)
-	grub-mkrescue -o $(ISO_DIR)/my-kernel.iso $(ISO_DIR)
+	grub-mkrescue -o $(ISO_DIR)/my-kernel.iso $(ISO_DIR) #--modules="i386-pc"
 
 # Compilation du noyau
 $(KERNEL_BIN): boot.o kernel.o
 	$(LD) $(LDFLAGS) -o $(KERNEL_BIN) boot.o kernel.o
 
 # Compilation de boot.asm en boot.o
+# Compilation du bootloader :
 boot.o: $(BOOT_SRC)
 	$(ASM) -f elf64 -o boot.o $(BOOT_SRC)
 

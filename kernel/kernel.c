@@ -13,7 +13,7 @@ void main() {
         // Bits 0-3 : Couleur du texte (ici, 0x07 = blanc).
         // Bits 4-7 : Couleur de fond (ici, 0x00 = fond noir).
         
-for (int i = 0; message[i] != '\0'; i++) {
-        video_memory[i] = (color << 8) | message[i];
-    }
+    for (int i = 0; message[i] != '\0'; i++) {
+            video_memory[i] = (color << 8) | message[i];
+        }
 }
