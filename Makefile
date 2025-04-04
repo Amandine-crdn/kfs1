@@ -22,4 +22,4 @@ kernel.o: $(KERNEL_SRC)
 
 
 clean:
-	rm -f *.o kernel.bin
+	rm -f *.o grub/kernel.bin
