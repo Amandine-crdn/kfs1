@@ -2,9 +2,9 @@ ASM = nasm
 CC = gcc
 LD = ld
 
-# Compilation en 64 bits (m64 pour l'architecture 64 bits)
-CFLAGS = -m64 -fno-builtin -fno-exceptions -fno-stack-protector -nostdlib -nodefaultlibs
-LDFLAGS = -m elf_x86_64 -T linker.ld
+# Compilation en 32 bits (m32 pour l'architecture 32 bits)
+CFLAGS = -m32 -fno-builtin -fno-exceptions -fno-stack-protector -nostdlib -nodefaultlibs
+LDFLAGS = -m elf_i386 -T linker.ld
 
 BOOT_SRC = asm/boot.asm
 KERNEL_SRC = kernel/kernel.c
@@ -22,7 +22,7 @@ all: my-kernel.iso
 
 # Création de l'image ISO
 my-kernel.iso: $(KERNEL_BIN)
-	grub-mkrescue -o $(ISO_DIR)/my-kernel.iso $(ISO_DIR) #--modules="i386-pc"
+	grub-mkrescue -o $(ISO_DIR)/my-kernel.iso $(ISO_DIR)
 
 # Compilation du noyau
 $(KERNEL_BIN): boot.o kernel.o
@@ -31,7 +31,7 @@ $(KERNEL_BIN): boot.o kernel.o
 # Compilation de boot.asm en boot.o
 # Compilation du bootloader :
 boot.o: $(BOOT_SRC)
-	$(ASM) -f elf64 -o boot.o $(BOOT_SRC)
+	$(ASM) -f elf32 -o boot.o $(BOOT_SRC)
 
 # Compilation du noyau en kernel.o
 kernel.o: $(KERNEL_SRC)

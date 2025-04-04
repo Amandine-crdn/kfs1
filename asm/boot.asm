@@ -1,18 +1,21 @@
-[bits 32]            ; spécification du mode 32 bits (x86)
-[global _start]      ; point d'entrée du bootloader
+bits 32
 
-_start:
-    ; Initialisation des segments de mémoire
-    mov ax, 0x01     ; Initialisation des registres pour l'accès mémoire
-    mov ds, ax
-    mov es, ax
+section .multiboot               ;according to multiboot spec
+        dd 0x1BADB002            ;set magic number for
+                                 ;bootloader
+        dd 0x0                   ;set flags
+        dd - (0x1BADB002 + 0x0)  ;set checksum
 
-    ; Affichage du message "42" sur l'écran en mode texte (BIOS interrupt)
-    mov ah, 0x0E     ; Service d'interruption pour l'affichage de caractère
-    mov al, '4'      ; Affiche le caractère '4'
-    int 0x10         ; Appelle l'interruption BIOS pour afficher '4'
+section .text
+global start
+extern main                      ;defined in the C file
 
-    mov al, '2'      ; Affiche le caractère '2'
-    int 0x10         ; Appelle à nouveau l'interruption BIOS pour afficher '2'
+start:
+        cli                      ;block interrupts
+        mov esp, stack_space     ;set stack pointer
+        call main
+        hlt                      ;halt the CPU
 
-    jmp $            ; Boucle infinie, pour ne pas retourner au bootloader
+section .bss
+resb 8192                        ;8KB for stack
+stack_space:
