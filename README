@@ -71,13 +71,15 @@ Il y a quatre registres de travaux: EAX, EDX, ECX, EBX**
 
 
 # 3. configurer GRUB
-	Installe GRUB sur une image virtuelle et configure-le pour démarrer ton code. Cela inclut la création d'un fichier de configuration GRUB qui appelle ton bootloader.
 
-	build l'iso: 
-	mkdir -p iso/boot/grub
-	cp kernel iso/boot/
-	cp grub.cfg iso/boot/grub/
-	grub-mkrescue -o my-kernel.iso iso/
+```
+uname -m
+x86_64
+```
+
+	Installe GRUB 
+	- creer un fichier de conf qui appelle ton bootloader.
+	- creer image iso: grub-mkrescue -o my-kernel.iso grub/
 
 # 4. Développer le noyau en C
 
