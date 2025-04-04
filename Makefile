@@ -9,21 +9,33 @@ LDFLAGS = -m elf_x86_64 -T linker.ld
 BOOT_SRC = asm/boot.asm
 KERNEL_SRC = kernel/kernel.c
 
-# Cible principale : générer le binaire du noyau dans iso/boot/kernel.bin
-all: iso/boot/kernel.bin
+# Répertoires de destination
+ISO_DIR = iso
+BOOT_DIR = $(ISO_DIR)/boot
+GRUB_DIR = $(BOOT_DIR)/grub
 
-# Lier les fichiers objets et créer le fichier binaire du noyau
-iso/boot/kernel.bin: boot.o kernel.o
-	$(LD) $(LDFLAGS) -o iso/boot/kernel.bin boot.o kernel.o
+# Noms de fichiers
+KERNEL_BIN = $(BOOT_DIR)/kernel.bin
+GRUB_CFG = $(GRUB_DIR)/grub.cfg
 
-# Compiler le fichier d'assemblage boot.asm
+all: my-kernel.iso
+
+# Création de l'image ISO
+my-kernel.iso: $(KERNEL_BIN)
+	grub-mkrescue -o $(ISO_DIR)/my-kernel.iso $(ISO_DIR)
+
+# Compilation du noyau
+$(KERNEL_BIN): boot.o kernel.o
+	$(LD) $(LDFLAGS) -o $(KERNEL_BIN) boot.o kernel.o
+
+# Compilation de boot.asm en boot.o
 boot.o: $(BOOT_SRC)
 	$(ASM) -f elf64 -o boot.o $(BOOT_SRC)
 
-# Compiler le fichier source kernel.c
+# Compilation du noyau en kernel.o
 kernel.o: $(KERNEL_SRC)
 	$(CC) $(CFLAGS) -c -o kernel.o $(KERNEL_SRC)
 
-# Nettoyer les fichiers objets et le fichier binaire
+# Nettoyage
 clean:
-	rm -f *.o iso/boot/kernel.bin
+	rm -f *.o $(KERNEL_BIN) $(ISO_DIR)/my-kernel.iso
