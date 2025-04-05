@@ -12,7 +12,6 @@ global start
 extern main                      ;defined in the C file
 
 start:
-        mov esp, stack_space     ;set stack pointer
         cli                      ;block interrupts
         mov esp, stack_space     ;set stack pointer
         call main
