@@ -3,7 +3,7 @@ CC = gcc
 LD = ld
 
 # Compilation en 32 bits (m32 pour l'architecture 32 bits)
-CFLAGS = -m32 -fno-builtin -fno-exceptions -fno-stack-protector -fno-rtti -nostdlib -nodefaultlibs
+CFLAGS = -m32 -fno-builtin -fno-stack-protector -nostdlib -nodefaultlibs
 LDFLAGS = -m elf_i386 -T linker.ld
 
 BOOT_SRC = asm/boot.asm
@@ -19,6 +19,9 @@ KERNEL_BIN = $(BOOT_DIR)/kernel.bin
 GRUB_CFG = $(GRUB_DIR)/grub.cfg
 
 all: my-kernel.iso
+
+run: $(KERNEL_BIN)
+	kvm -kernel iso/boot/kernel.bin -monitor stdio
 
 # Création de l'image ISO
 my-kernel.iso: $(KERNEL_BIN)
