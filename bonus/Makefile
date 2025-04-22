@@ -2,11 +2,11 @@ ASM = nasm
 CC = gcc
 LD = ld
 
-INCLUDES_DIR = includes/
+INCLUDES_DIR = includes/ printf/include/
 
 # Compilation en 32 bits (m32 pour l'architecture 32 bits)
 CFLAGS = -m32 -fno-builtin -fno-stack-protector -nostdlib -nodefaultlibs -I$(INCLUDES_DIR)
-LDFLAGS = -m elf_i386 -T linker.ld
+LDFLAGS = -m elf_i386 -T linker.ld -L./  --whole-archive libftprintf.a --no-whole-archive
 
 BOOT_SRC = asm/boot.asm
 KERNEL_SRC = kernel/kernel.c

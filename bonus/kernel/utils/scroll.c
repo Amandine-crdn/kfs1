@@ -25,15 +25,15 @@ void handle_keypress() {
     unsigned char key;
     while (1) {
         key = read_keyboard();
-        if (key == 0x48) { // Code de la touche flèche haut
+        if ( key == 0x48 ) { // Code de la touche flèche haut
             place += 1;
             // screen_buffer[0] = 'Q' | (unsigned short)WHITE << 8;
-            update_screen(1);
+            update_screen( 1 );
              // scroll up
-        } else if (key == 0x50) { // Code de la touche flèche bas
-            update_screen(2);
+        } else if ( key == 0x50 ) { // Code de la touche flèche bas
+            update_screen( 2 );
             // screen_buffer[0] = 'T' | (unsigned short)YELLOW << 8;
-            if (place > 1) // scroll down
+            if ( place > 1 ) // scroll down
             {
                 place -= 1;
 
@@ -57,7 +57,7 @@ void update_screen(unsigned int place)
     else 
     {
         unsigned int start = COLUMNS_COUNT * place;
-        for (unsigned int i = start, y = 0; (i < (ROWS_COUNT * COLUMNS_COUNT) - start) || (buffer[start]); i++, y++)
+        for (unsigned int i = start, y = 0; ( i < ( ROWS_COUNT * COLUMNS_COUNT ) - start ) || ( buffer[start] ); i++, y++)
         {
             screen_buffer[y] = buffer[i] | (unsigned short)RED << 8;
         }

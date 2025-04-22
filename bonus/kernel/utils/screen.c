@@ -31,15 +31,28 @@ void print_str(const char *s, unsigned char color)
         {
             print_new_line();
         }
-        print_char(s[i], color);
+        else
+        {
+            print_char(s[i], color);
+        }
         i++;
     }
     update_screen(1);
     // print_str(row_index, WHITE);
 }
 
-void print_new_line()
+int print_str_n(const char *s, unsigned char color, unsigned int n)
 {
+    int index = 0;
+    while (s[index] && index < n) 
+    {
+        print_char(s[index], color);
+        index++;
+    }
+    update_screen(1);
+    return index;
+}
+void print_new_line() {
     cursor_index += COLUMNS_COUNT - ((cursor_index) % COLUMNS_COUNT);
 }
 
