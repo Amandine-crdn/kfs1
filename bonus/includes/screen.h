@@ -26,7 +26,7 @@ extern unsigned int cursor_index;       // current positon in the array
 // | +---Background color (3 bits)
 // +-Reserved (1 bit, often set to 0, can be used for style on some system)
 
-
+int		kprintf(const char *format, ...);
 
 int print_char(char c, unsigned char color);
 int print_str(const char *s, unsigned char color);

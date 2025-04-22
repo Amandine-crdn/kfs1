@@ -27,6 +27,17 @@ int print_str(const char *s, unsigned char color)
     return index;
 }
 
+int print_str_n(const char *s, unsigned char color, unsigned int n)
+{
+    int index = 0;
+    while (s[index] && index < n) 
+    {
+        print_char(s[index], color);
+        index++;
+    }
+
+    return index;
+}
 int print_new_line() {
     cursor_index += COLUMNS_COUNT - ((cursor_index) % COLUMNS_COUNT);
 }
