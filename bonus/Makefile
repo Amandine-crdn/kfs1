@@ -13,6 +13,8 @@ KERNEL_SRC = kernel/kernel.c
 
 UTILS_SRC = kernel/utils/screen.c
 
+SCROLL_SRC = kernel/utils/scroll.c
+
 # Répertoires de destination
 ISO_DIR = iso
 BOOT_DIR = $(ISO_DIR)/boot
@@ -32,8 +34,8 @@ my-kernel.iso: $(KERNEL_BIN)
 	grub-mkrescue -o $(ISO_DIR)/my-kernel.iso $(ISO_DIR)
 
 # Compilation du noyau
-$(KERNEL_BIN): boot.o kernel.o screen.o
-	$(LD) $(LDFLAGS) -o $(KERNEL_BIN) boot.o kernel.o screen.o
+$(KERNEL_BIN): boot.o kernel.o screen.o scroll.o
+	$(LD) $(LDFLAGS) -o $(KERNEL_BIN) boot.o kernel.o screen.o scroll.o
 
 # Compilation de boot.asm en boot.o
 # Compilation du bootloader :
@@ -45,7 +47,10 @@ kernel.o: $(KERNEL_SRC)
 	$(CC) $(CFLAGS) -c -o kernel.o $(KERNEL_SRC)
 
 screen.o: $(UTILS_SRC)
-	$(CC) $(CFLAGS) -c -o screen.o $(UTILS_SRC)
+	$(CC) $(CFLAGS) -c -o screen.o  $(UTILS_SRC)
+
+scroll.o: $(UTILS_SRC)
+	$(CC) $(CFLAGS) -c -o scroll.o  $(SCROLL_SRC)
 
 # Nettoyage
 clean:

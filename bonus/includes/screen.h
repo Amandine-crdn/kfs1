@@ -4,9 +4,14 @@
 # define ROWS_COUNT (25)
 # define COLUMNS_COUNT (80)
 
+// #include <stdlib.h>
+// #include <stdio.h>
+
+
 extern unsigned short* screen_buffer;   // array representing the screen 25 (rows) * 80 (columns) * 2 (char + color) = 4000 bytes
-extern unsigned short* screen_buffer_saved;  
 extern unsigned int cursor_index;       // current positon in the array
+extern unsigned int total_row;
+extern char *buffer;
 
 # define VGA_ADDRESS 0xB8000 // adress of the array representing the screen
 
@@ -29,8 +34,12 @@ extern unsigned int cursor_index;       // current positon in the array
 
 
 int print_char(char c, unsigned char color);
-int print_str(const char *s, unsigned char color);
-int print_new_line();
+void print_str(const char *s, unsigned char color);
+void print_new_line();
 int clear_screen();
+
+int kstrlen(char *s);
+void update_screen(unsigned int place);
+void handle_keypress();
 
 #endif
