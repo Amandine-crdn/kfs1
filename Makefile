@@ -25,7 +25,7 @@ GRUB_CFG = $(GRUB_DIR)/grub.cfg
 all: my-kernel.iso
 
 run: $(KERNEL_BIN)
-	kvm -kernel iso/boot/kernel.bin -monitor stdio
+	kvm -boot d -cdrom ./iso/my-kernel.iso -m 512
 
 # Création de l'image ISO
 my-kernel.iso: $(KERNEL_BIN)
