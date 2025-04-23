@@ -2,7 +2,7 @@ ASM = nasm
 CC = gcc
 LD = ld
 
-INCLUDES_DIR = includes/ printf/include/
+INCLUDES_DIR = ./includes/ -I./printf/include/
 
 # Compilation en 32 bits (m32 pour l'architecture 32 bits)
 CFLAGS = -m32 -fno-builtin -fno-stack-protector -nostdlib -nodefaultlibs -I$(INCLUDES_DIR)
@@ -49,7 +49,7 @@ kernel.o: $(KERNEL_SRC)
 screen.o: $(UTILS_SRC)
 	$(CC) $(CFLAGS) -c -o screen.o  $(UTILS_SRC)
 
-scroll.o: $(UTILS_SRC)
+scroll.o: $(SCROLL_SRC)
 	$(CC) $(CFLAGS) -c -o scroll.o  $(SCROLL_SRC)
 
 # Nettoyage

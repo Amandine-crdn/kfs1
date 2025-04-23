@@ -1,15 +1,6 @@
 #include "screen.h"
+#include "ft_printf.h"
 
-// char *buffer;
-// char *buffer_color;
-
-// void init_buffers() {
-//     // Initialiser les buffers à zéro
-//     for (unsigned int i = 0; i < 50000; i++) {
-//         buffer[i] = 0;
-//         buffer_color[i] = 0;
-//     }
-// }
 
 void main() {
     // char *message = "42 nthimoni acerdan";
