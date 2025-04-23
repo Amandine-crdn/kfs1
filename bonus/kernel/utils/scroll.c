@@ -27,12 +27,12 @@ void handle_keypress() {
         key = read_keyboard();
         if ( key == 0x48 ) { // Code de la touche flèche haut
             place += 1;
-            // screen_buffer[0] = 'Q' | (unsigned short)WHITE << 8;
+            screen_buffer[0] = 'Q' | (unsigned short)WHITE << 8;
             update_screen( 1 );
              // scroll up
         } else if ( key == 0x50 ) { // Code de la touche flèche bas
             update_screen( 2 );
-            // screen_buffer[0] = 'T' | (unsigned short)YELLOW << 8;
+            screen_buffer[0] = 'T' | (unsigned short)YELLOW << 8;
             if ( place > 1 ) // scroll down
             {
                 place -= 1;

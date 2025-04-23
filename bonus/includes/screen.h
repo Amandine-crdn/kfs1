@@ -5,7 +5,6 @@
 # define COLUMNS_COUNT (80)
 
 // #include <stdlib.h>
-// #include <stdio.h>
 
 
 extern unsigned short* screen_buffer;   // array representing the screen 25 (rows) * 80 (columns) * 2 (char + color) = 4000 bytes
@@ -36,10 +35,15 @@ int		kprintf(const char *format, ...);
 int print_char(char c, unsigned char color);
 void print_str(const char *s, unsigned char color);
 void print_new_line();
-int clear_screen();
+int clear_screen(char color);
 
 int kstrlen(char *s);
 void update_screen(unsigned int place);
 void handle_keypress();
+
+
+void update_cursor();
+void set_cursor(int x, int y);
+
 
 #endif
