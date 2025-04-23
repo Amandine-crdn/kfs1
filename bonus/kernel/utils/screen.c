@@ -84,22 +84,20 @@ static inline void outb(int port, int value) {
 }
 
 void update_cursor() {
-    outb(0x3D4, 0x0F);
-    outb(0x3D5, (uint8_t)(cursor_index & 0xFF));
-
-    outb(0x3D4, 0x0E);
-    outb(0x3D5, (uint8_t)((cursor_index >> 8) & 0xFF));
+    set_cursor_offset(cursor_index);
 }
 
-void set_cursor(int x, int y) {
+void set_cursor(int x, int y) 
+{
     unsigned short position = y * COLUMNS_COUNT + x;
+    set_cursor_offset(position);
+}
 
+void set_cursor_offset(int offset) 
+{
     outb(0x3D4, 0x0F); // LOW BYTE
-    outb(0x3D5, (uint8_t)(position & 0xFF));
+    outb(0x3D5, (uint8_t)(offset & 0xFF));
 
     outb(0x3D4, 0x0E); // HIGH BYTE
-    outb(0x3D5, (uint8_t)((position >> 8)));
+    outb(0x3D5, (uint8_t)((offset >> 8)));
 }
-
-#define VGA_INDEX_REGISTER 0x3D4
-#define VGA_DATA_REGISTER 0x3D5
