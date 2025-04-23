@@ -11,7 +11,8 @@
 extern unsigned short* screen_buffer;   // array representing the screen 25 (rows) * 80 (columns) * 2 (char + color) = 4000 bytes
 extern unsigned int cursor_index;       // current positon in the array
 extern unsigned int total_row;
-extern char *buffer;
+// extern char *buffer;
+// extern char *buffer_color;
 
 # define VGA_ADDRESS 0xB8000 // adress of the array representing the screen
 
@@ -31,15 +32,15 @@ extern char *buffer;
 // | +---Background color (3 bits)
 // +-Reserved (1 bit, often set to 0, can be used for style on some system)
 
-int		kprintf(const char *format, ...);
+int		kprintf(char *format, ...);
 
 int print_char(char c, unsigned char color);
-void print_str(const char *s, unsigned char color);
+void print_str(char *s, unsigned char color);
 void print_new_line();
 int clear_screen();
 
 int kstrlen(char *s);
-void update_screen(unsigned int place);
-void handle_keypress();
+// void update_screen(unsigned int place);
+// void handle_keypress();
 
 #endif

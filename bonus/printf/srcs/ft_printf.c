@@ -77,7 +77,7 @@ char const	*ft_read_arg(char const *format, t_sc *sc, va_list arg)
 	return (format);
 }
 
-int	kprintf(const char *format, ...)
+int	kprintf(char *format, ...)
 {
 	// va_list	arg2;
 	// va_start(arg2, format);

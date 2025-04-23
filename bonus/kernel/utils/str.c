@@ -1,4 +1,4 @@
-// int kstrcmp(const char *s1, const char *s2)
+// int kstrcmp(char *s1, char *s2)
 // {
 //     while (*s1 && *s2)
 //     {
@@ -16,7 +16,7 @@
 //         return (1);
 // }
 
-// int kstrlen(const char *s)
+// int kstrlen(char *s)
 // {
 //     char *new = s;
 //     while (*new)

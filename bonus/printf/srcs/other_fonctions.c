@@ -17,7 +17,7 @@ void	ft_putchar(char c)
 {
 	// write(1, &c, 1);
 	// print_char(c, WHITE);
-	const char[] out = [c, '\0'];
+	char[] out = [c, '\0'];
 	print_str(out, WHITE);
 }
 
