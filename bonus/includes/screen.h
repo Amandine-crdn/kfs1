@@ -36,7 +36,7 @@ int		kprintf(char *format, ...);
 int print_char(char c, unsigned char color);
 void print_str(char *s, unsigned char color);
 void print_new_line();
-int clear_screen(char color);
+int clear_screen();
 
 int kstrlen(char *s);
 // void update_screen(unsigned int place);
@@ -45,6 +45,6 @@ int kstrlen(char *s);
 
 void update_cursor();
 void set_cursor(int x, int y);
-
+void set_cursor_offset(int offset);
 
 #endif

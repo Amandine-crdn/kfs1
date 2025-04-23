@@ -28,6 +28,7 @@ int print_char(char c, unsigned char color)
     
     screen_buffer[cursor_index] = c | (unsigned short)color << 8;
     cursor_index++;
+    update_cursor();
 }
 
 
@@ -92,7 +93,7 @@ void print_new_line()
     int nb = (COLUMNS_COUNT - (cursor_index % COLUMNS_COUNT));
     // cursor_index += COLUMNS_COUNT - ((cursor_index) % COLUMNS_COUNT);
     // nb=65;
-// 
+
     // kprintf("index %d", nb);
     while (nb > 0)
     {
@@ -101,7 +102,7 @@ void print_new_line()
     }
 }
 
-int clear_screen(char color)
+int clear_screen()
 {
     for (unsigned int i = 0; i < (ROWS_COUNT * COLUMNS_COUNT); i++)
     {

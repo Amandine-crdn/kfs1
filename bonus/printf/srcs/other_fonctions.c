@@ -16,15 +16,9 @@
 void	ft_putchar(char c)
 {
 	// write(1, &c, 1);
-<<<<<<< HEAD
-	// print_char(c, WHITE);
-	char[] out = [c, '\0'];
-	print_str(out, WHITE);
-=======
 	// print_char(c, WHITE);W
 	char outCou[] = {c, '\0'};
 	print_str(outCou, WHITE);
->>>>>>> 0e68384f1addd7fd9e65e036084933e8b70bd3a0
 }
 
 void	ft_putstr(char const *str)
