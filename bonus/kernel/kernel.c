@@ -18,7 +18,7 @@ void init_screens()
     screen_buffer = (unsigned short *)VGA_ADDRESS;
     for (int i = 0; i < SCREEN_COUNT; i++) {
         switch_screen(i);
-        clear_screen();
+        // clear_screen();
         print_str("Welcome ", WHITE);
 
         kprintf("to screen %d !\n", i + 1);
@@ -40,7 +40,7 @@ int display_screen(int screen_index)
 {
     if (screen_index < 0 || screen_index >= SCREEN_COUNT)
         return ;
-    // DISPLAY SCREEN
+    scroll_screen();
 
 }
 

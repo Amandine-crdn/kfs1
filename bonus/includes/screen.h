@@ -45,7 +45,7 @@ void print_str(char *s, unsigned char color);
 void print_str_n(char *s, unsigned char color, unsigned int n);
 void print_new_line();
 int clear_screen();
-
+void switch_screen(int new_screen_index);
 int kstrlen(char *s);
 void scroll_screen(void);
 int display_screen(int screen_index);

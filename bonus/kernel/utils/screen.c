@@ -9,7 +9,7 @@ unsigned char scancode = 0;
 int print_char(char c, unsigned char color)
 {
     if (c != '\n') {
-        screen_buffer[cursor_index] = c | (unsigned short)color << 8;
+        // screen_buffer[cursor_index] = c | (unsigned short)color << 8;
         stock[screen_index][cursor_index] = c | (unsigned short)color << 8;
         cursor_index++;
     } else {
@@ -25,14 +25,14 @@ int print_char(char c, unsigned char color)
     {
         total_row[screen_index]++;
     }
-    if (total_row[screen_index] > ROWS_COUNT)
-    {
+    // if (total_row[screen_index] > ROWS_COUNT)
+    // {
         scroll_screen();
-    }
-    else
-    {
-        update_cursor();
-    }
+    // }
+    // else
+    // {
+    //     update_cursor();
+    // }
     
     return 0;
 }
