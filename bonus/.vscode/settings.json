@@ -2,6 +2,7 @@
     "files.associations": {
         "printf.h": "c",
         "ft_printf.h": "c",
-        "screen.h": "c"
+        "screen.h": "c",
+        "keyboard.h": "c"
     }
 }

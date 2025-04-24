@@ -8,9 +8,14 @@
 
 
 extern unsigned short* screen_buffer;   // array representing the screen 25 (rows) * 80 (columns) * 2 (char + color) = 4000 bytes
-extern unsigned short* stock;   // array representing the screen 25 (rows) * 80 (columns) * 2 (char + color) = 4000 bytes
+
+#define SCREEN_COUNT 3
+extern unsigned short stock[SCREEN_COUNT][ROWS_COUNT * COLUMNS_COUNT*2];   // array representing the screen 25 (rows) * 80 (columns) * 2 (char + color) = 4000 bytes
+extern int screen_index;
+extern unsigned short stock_cursor_index[SCREEN_COUNT];
+
 extern unsigned int cursor_index;       // current positon in the array
-extern unsigned int total_row;
+extern unsigned int total_row[SCREEN_COUNT];
 extern unsigned char scancode;
 // extern char *buffer;
 // extern char *buffer_color;
@@ -37,12 +42,13 @@ int		kprintf(char *format, ...);
 
 int print_char(char c, unsigned char color);
 void print_str(char *s, unsigned char color);
+void print_str_n(char *s, unsigned char color, unsigned int n);
 void print_new_line();
 int clear_screen();
 
 int kstrlen(char *s);
 void scroll_screen(void);
-
+int display_screen(int screen_index);
 void update_cursor();
 void set_cursor(int x, int y);
 void set_cursor_offset(int offset);

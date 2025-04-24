@@ -2,16 +2,15 @@
 #include "ft_printf.h"
 
 unsigned short* screen_buffer;
-unsigned short *stock;
 unsigned int cursor_index = 0;
-unsigned int total_row = 0;
+unsigned int total_row[SCREEN_COUNT];
 unsigned char scancode = 0;
 
 int print_char(char c, unsigned char color)
 {
     if (c != '\n') {
         screen_buffer[cursor_index] = c | (unsigned short)color << 8;
-        stock[cursor_index] = c | (unsigned short)color << 8;
+        stock[screen_index][cursor_index] = c | (unsigned short)color << 8;
         cursor_index++;
     } else {
         print_new_line();
@@ -24,9 +23,9 @@ int print_char(char c, unsigned char color)
     
     if (cursor_index % COLUMNS_COUNT == 0)
     {
-        total_row++;
+        total_row[screen_index]++;
     }
-    if (total_row > ROWS_COUNT)
+    if (total_row[screen_index] > ROWS_COUNT)
     {
         scroll_screen();
     }
@@ -58,16 +57,22 @@ void print_str(char *s, unsigned char color)
     }
 }
 
-int print_str_n(char *s, unsigned char color, unsigned int n)
+void print_str_n(char *s, unsigned char color, unsigned int n)
 {
-    int index = 0;
-    while (s[index] && index < n) 
+    unsigned int i = 0;
+
+    while (s[i] && i < n) 
     {
-        print_char(s[index], color);
-        index++;
+        if (s[i] == '\n')
+        {
+            print_new_line();
+        }
+        else 
+        {
+            print_char(s[i], color);
+        }
+        i++;
     }
-    // update_screen(1);
-    return index;
 }
 
 void print_new_line()
@@ -82,8 +87,8 @@ void print_new_line()
     {
         cursor_index += COLUMNS_COUNT - ((cursor_index) % COLUMNS_COUNT);
     }
-    total_row++;
-    if (total_row > ROWS_COUNT)
+    total_row[screen_index]++;
+    if (total_row[screen_index] > ROWS_COUNT)
     {
         scroll_screen();
     }
@@ -96,13 +101,13 @@ void print_new_line()
 int clear_screen()
 {
     cursor_index = 0;
-    total_row = 0;
+    total_row[screen_index] = 0;
     for (unsigned int i = 0; i < (ROWS_COUNT * COLUMNS_COUNT); i++)
     {
         print_char(' ', WHITE);
     }
     cursor_index = 0;
-    total_row = 0;
+    total_row[screen_index] = 0;
     update_cursor();
     return 0;
 }

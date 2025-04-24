@@ -85,6 +85,10 @@ void handle_keyboard()
             } else if (scancode == RELEASE_CTRL) {
                 ctrl_pressed = 0;
             } else if (ctrl_pressed) {
+                char ascii = scancode_to_ascii(scancode, shift_pressed);
+                if (!(scancode & RELEASE_MASK) && ascii >= '1' && ascii < ('1' + SCREEN_COUNT)) {
+                    switch_screen(ascii - '1');
+                }
                 //HANDLE SCREEN SWITCH;
             } else if (!(scancode & RELEASE_MASK)) { // Ignore key release events
                 char ascii = scancode_to_ascii(scancode, shift_pressed);
