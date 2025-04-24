@@ -45,7 +45,6 @@ void scroll_screen(void);
 
 void update_cursor();
 void set_cursor(int x, int y);
-// void keyboard_interrupt_handler();
-
+void set_cursor_offset(int offset);
 
 #endif

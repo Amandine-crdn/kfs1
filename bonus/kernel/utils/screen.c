@@ -18,17 +18,6 @@ int print_char(char c, unsigned char color)
     stock[cursor_index] = c | (unsigned short)color << 8;
     cursor_index++;
     update_cursor();
-    
-    if (cursor_index % COLUMNS_COUNT == 0)
-    {
-        total_row++;
-    }
-    if (total_row > ROWS_COUNT)
-    {
-        scroll_screen();
-    }
-    
-    return 0;
 }
 
 
@@ -65,8 +54,6 @@ int print_str_n(char *s, unsigned char color, unsigned int n)
 
 void print_new_line()
 {
-    unsigned int remainder = cursor_index % COLUMNS_COUNT;
-
     if (cursor_index % COLUMNS_COUNT == 0)
     {
         // + 80 = Ligne suivante si debut de ligne
