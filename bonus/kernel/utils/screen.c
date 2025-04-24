@@ -9,15 +9,33 @@ unsigned char scancode = 0;
 
 int print_char(char c, unsigned char color)
 {
-    screen_buffer[cursor_index] = c | (unsigned short)color << 8;
+    if (c != '\n') {
+        screen_buffer[cursor_index] = c | (unsigned short)color << 8;
+        stock[cursor_index] = c | (unsigned short)color << 8;
+        cursor_index++;
+    } else {
+        print_new_line();
+    }
     // le premier octet est le caractère lui-même (selon le code ASCII)
     // le second octet contient des informations sur la couleur de fond et la couleur du texte.
     // Bits 0-3 : Couleur du texte (ex: 0x07 = blanc).
     // Bits 4-7 : Couleur de fond (ex: 0x00 = fond noir).
 
-    stock[cursor_index] = c | (unsigned short)color << 8;
-    cursor_index++;
-    update_cursor();
+    
+    if (cursor_index % COLUMNS_COUNT == 0)
+    {
+        total_row++;
+    }
+    if (total_row > ROWS_COUNT)
+    {
+        scroll_screen();
+    }
+    else
+    {
+        update_cursor();
+    }
+    
+    return 0;
 }
 
 
@@ -54,6 +72,7 @@ int print_str_n(char *s, unsigned char color, unsigned int n)
 
 void print_new_line()
 {
+
     if (cursor_index % COLUMNS_COUNT == 0)
     {
         // + 80 = Ligne suivante si debut de ligne
@@ -67,6 +86,10 @@ void print_new_line()
     if (total_row > ROWS_COUNT)
     {
         scroll_screen();
+    }
+    else 
+    {
+        update_cursor();
     }
 }
 

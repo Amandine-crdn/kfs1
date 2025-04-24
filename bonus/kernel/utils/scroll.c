@@ -46,10 +46,14 @@ void scroll_screen()
     // }
     
     unsigned int start = overflow_rows * COLUMNS_COUNT;
-
-    for (unsigned int i = 0; i < ROWS_COUNT * COLUMNS_COUNT; i++)
+    int last_char_index = 0;
+    for (unsigned int i = 0; i < (ROWS_COUNT * COLUMNS_COUNT); i++)
     {
-        screen_buffer[i] = stock[start + i];
-        update_cursor();
+        screen_buffer[i] = stock[start + i] ? stock[start + i] : ' ' | (unsigned short)WHITE<<8 ;
+        if (screen_buffer[i] && screen_buffer[i] != (' ' | (unsigned short)WHITE<<8)) {
+            last_char_index = i;
+        }
+        // update_cursor();
     }
+    set_cursor_offset(last_char_index + 1);
 }

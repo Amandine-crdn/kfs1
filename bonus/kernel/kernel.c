@@ -11,18 +11,24 @@ void send_message()
     // print_new_line();
     // print_new_line();
     // print_new_line();
-    print_str("START 1 Bien le bonjour gente dame comment allezBien le bonjour gente dame comment /2 Bien le bonjour gente dame comment allezBien le bonjour gente dame comment allez/ Bien le bonjour gente dame comment allezBien le bonjour gente dame comment allez/vous ? Mea culpa 42 80 ??fffffffffffffffffAAAAAAAAAAAAAAAAAAAAAAAAAAAAffffffffffffffffffAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaaffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffjattends les 80      ffffffffffffffffffffffffffffffffffffffffffffffff42fff     HEEEEYYY ffffffffff42fffaaaqq", YELLOW);
-    print_new_line();
-    print_str("coucouder\n", YELLOW);
-    print_str("10\n", GREEN);
-    print_str("  e dame comment allezBien le bonjour gente dame commen   ffffffffffffffffffffffffffffffffffffffffffffffff42fff     HEEEEYYY ffffffffff42fffaaaqq", WHITE);
-    print_new_line();
-    print_new_line();
-    print_new_line();
-    print_new_line();
-    print_str(" 10", RED);
-    print_str("10\n", GREEN);
-    print_str("coucouder", YELLOW);
+    // print_str("START 1 Bien le bonjour gente dame comment allezBien le bonjour gente dame comment /2 Bien le bonjour gente dame comment allezBien le bonjour gente dame comment allez/ Bien le bonjour gente dame comment allezBien le bonjour gente dame comment allez/vous ? Mea culpa 42 80 ??fffffffffffffffffAAAAAAAAAAAAAAAAAAAAAAAAAAAAffffffffffffffffffAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaaffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffffffffffffffffffffffffffffffffffffffffffffffffff42ffjattends les 80      ffffffffffffffffffffffffffffffffffffffffffffffff42fff     HEEEEYYY ffffffffff42fffaaaqq", YELLOW);
+    // print_new_line();
+    // print_str("coucouder\n", YELLOW);
+    // print_str("10\n", GREEN);
+    // print_str("  e dame comment allezBien le bonjour gente dame commen   ffffffffffffffffffffffffffffffffffffffffffffffff42fff     HEEEEYYY ffffffffff42fffaaaqq", WHITE);
+    // print_new_line();
+    // print_new_line();
+    // print_new_line();
+    // print_new_line();
+    // print_str(" 10", RED);
+    // print_str("10\n", GREEN);
+    // print_str("coucouder", YELLOW);
+     char *message = "%d nthimoni acerdan\n";
+    kprintf(message, 42);
+    print_str("42 nthimoni acerdan\n", GREEN);
+    print_str("42 nthimoni acerdan\n", RED);
+    print_str("42 nthimoni acerdan\n", YELLOW);
+
 }
 
 void init_screens()
@@ -31,12 +37,14 @@ void init_screens()
     screen_buffer = (unsigned short *)VGA_ADDRESS;
     clear_screen();
     unsigned short tmp[ROWS_COUNT * COLUMNS_COUNT*2];
+    
     stock = tmp;
 }
 
 
 void main()
 {
+    set_cursor_offset(0);
     init_screens();
     send_message();
     // keyboard_interrupt_handler();
