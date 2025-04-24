@@ -1,24 +1,55 @@
 #include "screen.h"
+// Codes standard pour les touches flèches
+#define KEY_UP    0x48  // Scancode pour flèche haut
+#define KEY_DOWN  0x50  // Scancode pour flèche bas
 
 
-// void update_screen(unsigned int place)
+// static inline unsigned char inb(unsigned short port)
 // {
-//     unsigned int len_buffer = kstrlen(buffer);
-
-//     if (len_buffer <= ROWS_COUNT * COLUMNS_COUNT) 
-//     {
-//         for (unsigned int i = 0; i < len_buffer; i++)
-//         {
-//             // screen_buffer[i] = buffer[i] | (unsigned short)WHITE << 8;
-//             screen_buffer[i] = buffer[i] | (unsigned short)buffer_color[i] << 8;
-//         }
-//     }
-//     else 
-//     {
-//         unsigned int start = COLUMNS_COUNT * place;
-//         for (unsigned int i = start, y = 0; ( i < ( ROWS_COUNT * COLUMNS_COUNT ) - start ) || ( buffer[start] ); i++, y++)
-//         {
-//             screen_buffer[y] = buffer[i] | (unsigned short)GREEN << 8;
-//         }
-//     }
+//     unsigned char value;
+//     __asm__ volatile ("inb %1, %0" : "=a"(value) : "Nd"(port));
+//     return value;
 // }
+
+// unsigned char read_scancode()
+// {
+//     return inb(0x60);  // Lit un octet depuis le port d'E/S 0x60
+// }
+
+// void keyboard_interrupt_handler()
+// {
+//     scancode = read_scancode();
+//     // Acquitter l'interruption
+//     outb(0x20, 0x20);  // EOI au PIC
+// }
+
+void scroll_screen()
+{
+    unsigned int overflow_rows = total_row - ROWS_COUNT + 1;
+
+    //  switch(scancode) {
+    //     case KEY_UP:
+    //         // Scroll vers le haut (afficher contenu précédent)
+    //         if (overflow_rows > 0) {
+    //             overflow_rows--;
+    //             scroll_screen();
+    //         }
+    //         break;
+            
+    //     case KEY_DOWN:
+    //         // Scroll vers le bas (afficher contenu suivant)
+    //         if (overflow_rows < total_row) {
+    //             overflow_rows++;
+    //             scroll_screen();
+    //         }
+    //         break;
+    // }
+    
+    unsigned int start = overflow_rows * COLUMNS_COUNT;
+
+    for (unsigned int i = 0; i < ROWS_COUNT * COLUMNS_COUNT; i++)
+    {
+        screen_buffer[i] = stock[start + i];
+        update_cursor();
+    }
+}

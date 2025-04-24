@@ -1,62 +1,41 @@
 #include "screen.h"
-#include "/home/nthimoni/Documents/kfs-1-repo/bonus/printf/include/ft_printf.h"
+#include "ft_printf.h"
 
 unsigned short* screen_buffer;
+unsigned short *stock;
 unsigned int cursor_index = 0;
 unsigned int total_row = 0;
-// char *buffer;
-// char *buffer_color;
-
-// int print_char(char c, unsigned char color)
-// {
-//     screen_buffer[cursor_index] = c | (unsigned short)color << 8;
-//     // buffer[cursor_index] = c ;
-//     cursor_index++;
-//     // update_cursor();W
-//     if (cursor_index % COLUMNS_COUNT == 0)
-//     {
-//         total_row += 1;
-//     }
-
-//     // le premier octet est le caractère lui-même (selon le code ASCII)
-//     // le second octet contient des informations sur la couleur de fond et la couleur du texte.
-//     // Bits 0-3 : Couleur du texte (ex: 0x07 = blanc).
-//     // Bits 4-7 : Couleur de fond (ex: 0x00 = fond noir).
+unsigned char scancode = 0;
 
 int print_char(char c, unsigned char color)
 {
-    
     screen_buffer[cursor_index] = c | (unsigned short)color << 8;
+    // le premier octet est le caractère lui-même (selon le code ASCII)
+    // le second octet contient des informations sur la couleur de fond et la couleur du texte.
+    // Bits 0-3 : Couleur du texte (ex: 0x07 = blanc).
+    // Bits 4-7 : Couleur de fond (ex: 0x00 = fond noir).
+
+    stock[cursor_index] = c | (unsigned short)color << 8;
     cursor_index++;
+    update_cursor();
+    
+    if (cursor_index % COLUMNS_COUNT == 0)
+    {
+        total_row++;
+    }
+    if (total_row > ROWS_COUNT)
+    {
+        scroll_screen();
+    }
+    
+    return 0;
 }
+
 
 
 void print_str(char *s, unsigned char color)
 {
     unsigned int i = 0;
-    unsigned int len_buffer = kstrlen(s);
-    unsigned int temp;
-
-    // si plus grand que lecran afficher le bas direct
-    if ( len_buffer >= ROWS_COUNT * COLUMNS_COUNT )
-    {
-        i = len_buffer - (ROWS_COUNT * COLUMNS_COUNT);
-        cursor_index = 0;
-    }
-
-    // si ecran deja plein scrolling en cours sur laffichage precedent en memoire
-    else if (cursor_index >= ROWS_COUNT * COLUMNS_COUNT)
-    {
-        temp = len_buffer;
-        cursor_index = 0;
-
-        while (temp < (ROWS_COUNT * COLUMNS_COUNT))
-        {
-            screen_buffer[cursor_index] = screen_buffer[temp];
-            cursor_index++; 
-            temp++;
-        }
-    }
 
     while (s[i]) 
     {
@@ -70,9 +49,6 @@ void print_str(char *s, unsigned char color)
         }
         i++;
     }
- 
-    // update_screen(1);
-    // print_str(row_index, WHITE);
 }
 
 int print_str_n(char *s, unsigned char color, unsigned int n)
@@ -89,27 +65,37 @@ int print_str_n(char *s, unsigned char color, unsigned int n)
 
 void print_new_line()
 {
-    int nb = (COLUMNS_COUNT - (cursor_index % COLUMNS_COUNT));
-    // cursor_index += COLUMNS_COUNT - ((cursor_index) % COLUMNS_COUNT);
-    // nb=65;
-// 
-    // kprintf("index %d", nb);
-    while (nb > 0)
+    unsigned int remainder = cursor_index % COLUMNS_COUNT;
+
+    if (cursor_index % COLUMNS_COUNT == 0)
     {
-        print_str(" ", WHITE);
-        nb--;
+        // + 80 = Ligne suivante si debut de ligne
+        cursor_index += COLUMNS_COUNT;
+    }
+    else
+    {
+        cursor_index += COLUMNS_COUNT - ((cursor_index) % COLUMNS_COUNT);
+    }
+    total_row++;
+    if (total_row > ROWS_COUNT)
+    {
+        scroll_screen();
     }
 }
 
-int clear_screen(char color)
+int clear_screen()
 {
+    cursor_index = 0;
+    total_row = 0;
     for (unsigned int i = 0; i < (ROWS_COUNT * COLUMNS_COUNT); i++)
     {
         print_char(' ', WHITE);
     }
     cursor_index = 0;
+    total_row = 0;
+    update_cursor();
+    return 0;
 }
-
 
 int kstrlen(char *s)
 {
@@ -126,15 +112,6 @@ static inline void outb(int port, int value) {
     asm volatile ("outb %%al, %%dx" : : "a"(value), "d"(port));
 }
 
-void update_cursor() {
-    set_cursor_offset(cursor_index);
-}
-
-void set_cursor(int x, int y) 
-{
-    unsigned short position = y * COLUMNS_COUNT + x;
-    set_cursor_offset(position);
-}
 
 void set_cursor_offset(int offset) 
 {
@@ -143,4 +120,13 @@ void set_cursor_offset(int offset)
 
     outb(0x3D4, 0x0E); // HIGH BYTE
     outb(0x3D5, (uint8_t)((offset >> 8)));
+}
+void update_cursor() {
+    set_cursor_offset(cursor_index);
+}
+
+void set_cursor(int x, int y) 
+{
+    unsigned short position = y * COLUMNS_COUNT + x;
+    set_cursor_offset(position);
 }
