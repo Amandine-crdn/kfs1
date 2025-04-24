@@ -10,9 +10,11 @@
 extern unsigned short* screen_buffer;   // array representing the screen 25 (rows) * 80 (columns) * 2 (char + color) = 4000 bytes
 
 #define SCREEN_COUNT 3
-extern unsigned short stock[SCREEN_COUNT][ROWS_COUNT * COLUMNS_COUNT*2];   // array representing the screen 25 (rows) * 80 (columns) * 2 (char + color) = 4000 bytes
+#define BUFFER_ROW_COUNT (ROWS_COUNT * 2)
+extern unsigned short stock[SCREEN_COUNT][BUFFER_ROW_COUNT * COLUMNS_COUNT];   // array representing the screen 25 (rows) * 80 (columns) * 2 (char + color) = 4000 bytes
 extern int screen_index;
 extern unsigned short stock_cursor_index[SCREEN_COUNT];
+extern unsigned short extra_scroll[SCREEN_COUNT];
 
 extern unsigned int cursor_index;       // current positon in the array
 extern unsigned int total_row[SCREEN_COUNT];

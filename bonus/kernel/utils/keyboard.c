@@ -76,7 +76,22 @@ void handle_keyboard()
         {
             unsigned char scancode = get_scancode();
 
-            if (scancode == PRESS_LEFT_SHIFT || scancode == PRESS_RIGHT_SHIFT) {
+            if (scancode == 0xE0) {
+                scancode = get_scancode();
+                if (scancode == 0x48) {
+                    if (extra_scroll[screen_index] <= total_row[screen_index] - ROWS_COUNT)
+                    {
+                        extra_scroll[screen_index]++;
+                        display_screen(screen_index);
+                    }
+                } else if (scancode == 0x50) {
+                    if (extra_scroll[screen_index])
+                    {
+                        extra_scroll[screen_index]--;
+                        display_screen(screen_index);
+                    }
+                }
+            } else if (scancode == PRESS_LEFT_SHIFT || scancode == PRESS_RIGHT_SHIFT) {
                 shift_pressed = 1;
             } else if (scancode == RELEASE_LEFT_SHIFT || scancode == RELEASE_RIGHT_SHIFT) {
                 shift_pressed = 0;

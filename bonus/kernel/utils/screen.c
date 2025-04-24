@@ -8,12 +8,15 @@ unsigned char scancode = 0;
 
 int print_char(char c, unsigned char color)
 {
-    if (c != '\n') {
-        // screen_buffer[cursor_index] = c | (unsigned short)color << 8;
+    extra_scroll[screen_index] = 0;
+    if (c == '\n') {
+        print_new_line();
+        return 0;
+    } else if (c >= 32 && c <= 126){
+        if (cursor_index < ROWS_COUNT * COLUMNS_COUNT)
+            screen_buffer[cursor_index] = c | (unsigned short)color << 8;
         stock[screen_index][cursor_index] = c | (unsigned short)color << 8;
         cursor_index++;
-    } else {
-        print_new_line();
     }
     // le premier octet est le caractère lui-même (selon le code ASCII)
     // le second octet contient des informations sur la couleur de fond et la couleur du texte.
@@ -23,16 +26,29 @@ int print_char(char c, unsigned char color)
     
     if (cursor_index % COLUMNS_COUNT == 0)
     {
-        total_row[screen_index]++;
+        if (total_row[screen_index] == (BUFFER_ROW_COUNT - 1))
+        {
+            for (int i = COLUMNS_COUNT; i < COLUMNS_COUNT * BUFFER_ROW_COUNT; i++) {
+                stock[screen_index][i - COLUMNS_COUNT] = stock[screen_index][i];
+            }
+            for (int i = COLUMNS_COUNT * (BUFFER_ROW_COUNT - 1); i < COLUMNS_COUNT * BUFFER_ROW_COUNT; i++) {
+                stock[screen_index][i] = ' ' | (unsigned int)YELLOW << 8;
+            }
+            cursor_index -= COLUMNS_COUNT;
+        }
+        else
+        {
+            total_row[screen_index]++;
+        }
     }
-    // if (total_row[screen_index] > ROWS_COUNT)
-    // {
+    if (total_row[screen_index] >= ROWS_COUNT)
+    {
         scroll_screen();
-    // }
-    // else
-    // {
-    //     update_cursor();
-    // }
+    }
+    else
+    {
+        update_cursor();
+    }
     
     return 0;
 }
@@ -78,33 +94,54 @@ void print_str_n(char *s, unsigned char color, unsigned int n)
 void print_new_line()
 {
 
-    if (cursor_index % COLUMNS_COUNT == 0)
-    {
-        // + 80 = Ligne suivante si debut de ligne
-        cursor_index += COLUMNS_COUNT;
+    // if (cursor_index % COLUMNS_COUNT == 0)
+    // {
+    //     // + 80 = Ligne suivante si debut de ligne
+    //     cursor_index += COLUMNS_COUNT;
+    // }
+    // else
+    // {
+    int offset = COLUMNS_COUNT - ((cursor_index) % COLUMNS_COUNT);
+    for (; offset > 0; offset--) {
+        stock[screen_index][cursor_index] = ' ' | (unsigned short)WHITE << 8;
+        cursor_index++;
+        // print_char(' ', WHITE);
     }
-    else
-    {
-        cursor_index += COLUMNS_COUNT - ((cursor_index) % COLUMNS_COUNT);
-    }
-    total_row[screen_index]++;
-    if (total_row[screen_index] > ROWS_COUNT)
-    {
-        scroll_screen();
-    }
-    else 
-    {
-        update_cursor();
-    }
+    if (total_row[screen_index] == (BUFFER_ROW_COUNT - 1))
+        {
+            for (int i = COLUMNS_COUNT; i < COLUMNS_COUNT * BUFFER_ROW_COUNT; i++) {
+                stock[screen_index][i - COLUMNS_COUNT] = stock[screen_index][i];
+            }
+            for (int i = COLUMNS_COUNT * (BUFFER_ROW_COUNT - 1); i < COLUMNS_COUNT * BUFFER_ROW_COUNT; i++) {
+                stock[screen_index][i] = ' ' | (unsigned int)YELLOW << 8;
+            }
+            cursor_index -= COLUMNS_COUNT;
+        }
+        else
+        {
+            total_row[screen_index]++;
+        }
+    display_screen(screen_index);
+    // }
+    // total_row[screen_index]++;
+    // if (total_row[screen_index] > ROWS_COUNT)
+    // {
+    //     scroll_screen();
+    // }
+    // else 
+    // {
+    //     update_cursor();
+    // }
 }
 
 int clear_screen()
 {
     cursor_index = 0;
     total_row[screen_index] = 0;
-    for (unsigned int i = 0; i < (ROWS_COUNT * COLUMNS_COUNT); i++)
+    for (unsigned int i = 0; i < (BUFFER_ROW_COUNT * COLUMNS_COUNT); i++)
     {
-        print_char(' ', WHITE);
+        stock[screen_index][i] = ' ' | (unsigned int)YELLOW << 8;
+        // print_char(' ', YELLOW);
     }
     cursor_index = 0;
     total_row[screen_index] = 0;
