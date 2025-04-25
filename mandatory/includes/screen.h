@@ -5,7 +5,6 @@
 # define COLUMNS_COUNT (80)
 
 extern unsigned short* screen_buffer;   // array representing the screen 25 (rows) * 80 (columns) * 2 (char + color) = 4000 bytes
-extern unsigned short* screen_buffer_saved;  
 extern unsigned int cursor_index;       // current positon in the array
 
 # define VGA_ADDRESS 0xB8000 // adress of the array representing the screen

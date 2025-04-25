@@ -26,17 +26,17 @@ GRUB_DIR = $(BOOT_DIR)/grub
 KERNEL_BIN = $(BOOT_DIR)/kernel.bin
 GRUB_CFG = $(GRUB_DIR)/grub.cfg
 
-all: my-kernel.iso
+all: $(ISO_DIR)/my-kernel.iso
 
 run: $(KERNEL_BIN)
 	kvm -boot d -cdrom ./iso/my-kernel.iso -m 512
 
 # Création de l'image ISO
-my-kernel.iso: $(KERNEL_BIN)
+$(ISO_DIR)/my-kernel.iso: $(KERNEL_BIN)
 	grub-mkrescue -o $(ISO_DIR)/my-kernel.iso $(ISO_DIR)
 
 # Compilation du noyau
-$(KERNEL_BIN): boot.o kernel.o screen.o scroll.o keyboard.o
+$(KERNEL_BIN): libftprintf.a boot.o kernel.o screen.o scroll.o keyboard.o
 	$(LD) $(LDFLAGS) -o $(KERNEL_BIN) boot.o kernel.o screen.o scroll.o keyboard.o
 
 # Compilation de boot.asm en boot.o
@@ -57,8 +57,12 @@ scroll.o: $(SCROLL_SRC)
 keyboard.o: $(KEYBOARD_SRC)
 	$(CC) $(CFLAGS) -c -o keyboard.o  $(KEYBOARD_SRC)
 
+libftprintf.a:
+	make re -C printf
+	mv printf/libftprintf.a ./libftprintf.a
 # Nettoyage
 clean:
-	rm -f *.o $(KERNEL_BIN) $(ISO_DIR)/my-kernel.iso
+	rm -f kernel/*.o kernel/utils/*.o $(KERNEL_BIN) $(ISO_DIR)/my-kernel.iso libftprintf.a
+	make fclean -C printf
 
-re: clean run
+re: clean all

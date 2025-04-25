@@ -2,16 +2,6 @@
 #include "keyboard.h"
 #include "ft_printf.h"
 
-void send_message()
-{
-     char *message = "%d nthimoni acerdan\n";
-    kprintf(message, 42);
-    print_str("42 nthimoni acerdan\n", GREEN);
-    print_str("42 nthimoni acerdan\n", RED);
-    print_str("42 nthimoni acerdan\n", YELLOW);
-
-}
-
 void init_screens()
 {
     // mémoire est mappée dans le segment de mémoire à l'adresse 0xB8000
@@ -37,7 +27,7 @@ void switch_screen(int new_screen_index)
     display_screen(screen_index);
 }
 
-int display_screen(int screen_index)
+void display_screen(int screen_index)
 {
     if (screen_index < 0 || screen_index >= SCREEN_COUNT)
         return ;
@@ -56,7 +46,6 @@ int display_screen(int screen_index)
         }
         set_cursor_offset(last_char_index + 1);
     } 
-
 }
 
 
@@ -64,8 +53,6 @@ void main()
 {
     set_cursor_offset(0);
     init_screens();
-    // send_message();
-    // keyboard_interrupt_handler();
     handle_keyboard();
 }
 
@@ -73,4 +60,4 @@ void main()
 //TO DO
 // FACTORISATIO -> -Cursor detection
 //                 -total_line++ (buffer overflow)
-//                 -empecher l'overwrite de l'enete de page (welcome 1, 2, 3) (buffer overflow)
+//                 -empecher l'overwrite de l'enete de page (welcome 1, 2, 3) (buffer overflow) 

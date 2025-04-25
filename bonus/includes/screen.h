@@ -40,17 +40,15 @@ extern unsigned char scancode;
 // | +---Background color (3 bits)
 // +-Reserved (1 bit, often set to 0, can be used for style on some system)
 
-int		kprintf(char *format, ...);
-
 int print_char(char c, unsigned char color);
-void print_str(char *s, unsigned char color);
-void print_str_n(char *s, unsigned char color, unsigned int n);
+void print_str(const char *s, unsigned char color);
+void print_str_n(const char *s, unsigned char color, unsigned int n);
 void print_new_line();
 int clear_screen();
 void switch_screen(int new_screen_index);
 int kstrlen(char *s);
 void scroll_screen(void);
-int display_screen(int screen_index);
+void display_screen(int screen_index);
 void update_cursor();
 void set_cursor(int x, int y);
 void set_cursor_offset(int offset);

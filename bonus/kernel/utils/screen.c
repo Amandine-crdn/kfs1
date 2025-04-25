@@ -55,7 +55,7 @@ int print_char(char c, unsigned char color)
 
 
 
-void print_str(char *s, unsigned char color)
+void print_str(const char *s, unsigned char color)
 {
     unsigned int i = 0;
 
@@ -73,8 +73,10 @@ void print_str(char *s, unsigned char color)
     }
 }
 
-void print_str_n(char *s, unsigned char color, unsigned int n)
+void print_str_n(const char *s, unsigned char color, unsigned int n)
 {
+    if (n < 0)
+        return;
     unsigned int i = 0;
 
     while (s[i] && i < n) 

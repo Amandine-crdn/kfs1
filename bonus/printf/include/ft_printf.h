@@ -35,10 +35,11 @@ typedef char int8_t;
 typedef short int16_t;
 typedef int int32_t;
 typedef long long int64_t;
+#define LONG_MIN (-2147483648)
 #define NULL ((void *)0)
 
 #define VA_SIZE(type) ((sizeof(type) + sizeof(uint32_t) - 1) & ~(sizeof(uint32_t) - 1))
-#define va_start(ap, last) (*ap = (va_list)(&last + 1))
+#define va_start(ap, last) (*ap = (char*)(&last + 1))
 #define va_arg(ap, type) (*(type *)((*ap += VA_SIZE(type)) - VA_SIZE(type)))
 #define va_end(ap) (*ap = NULL)
 
@@ -55,8 +56,8 @@ void	ft_putnbr(int nb);
 void	ft_print_hexa_x(unsigned long nbr, char c);
 void	ft_print_adress(unsigned long nbr);
 void	ft_putnbr_u(unsigned int nb);
-size_t	ft_strlen(char *s);
-char	*ft_strchr(char *s, int c);
+size_t	ft_strlen(const char *s);
+char	*ft_strchr(const char *s, int c);
 void	ft_choice_s(t_sc *sc, va_list arg);
 void	ft_choice_c(t_sc *sc, va_list arg);
 void	ft_choice_d_i(t_sc *sc, va_list arg);
@@ -64,6 +65,6 @@ void	ft_choice_p(t_sc *sc, va_list arg);
 void	ft_choice_x(char c, t_sc *sc, va_list arg);
 int		ft_memlen(unsigned long addr, unsigned int base);
 int		ft_intlen(int nb);
-int		kprintf(char *format, ...);
+int		kprintf(const char *format, ...);
 
 #endif

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
-#include <limits.h>
+// #include <limits.h>
 #include "screen.h"
 
 void	ft_choice_s(t_sc *sc, va_list arg)

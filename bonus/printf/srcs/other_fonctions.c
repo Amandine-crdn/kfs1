@@ -17,8 +17,9 @@ void	ft_putchar(char c)
 {
 	// write(1, &c, 1);
 	// print_char(c, WHITE);W
-	char outCou[] = {c, '\0'};
-	print_str(outCou, WHITE);
+	// char outCou[] = {c, '\0'};
+	// print_str(outCou, WHITE);
+	print_char(c, WHITE);
 }
 
 void	ft_putstr(char const *str)

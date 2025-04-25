@@ -22,13 +22,13 @@ GRUB_DIR = $(BOOT_DIR)/grub
 KERNEL_BIN = $(BOOT_DIR)/kernel.bin
 GRUB_CFG = $(GRUB_DIR)/grub.cfg
 
-all: my-kernel.iso
+all: $(ISO_DIR)/my-kernel.iso
 
 run: $(KERNEL_BIN)
 	kvm -boot d -cdrom ./iso/my-kernel.iso -m 512
 
 # Création de l'image ISO
-my-kernel.iso: $(KERNEL_BIN)
+$(ISO_DIR)/my-kernel.iso: $(KERNEL_BIN)
 	grub-mkrescue -o $(ISO_DIR)/my-kernel.iso $(ISO_DIR)
 
 # Compilation du noyau
@@ -48,7 +48,7 @@ screen.o: $(UTILS_SRC)
 	$(CC) $(CFLAGS) -c -o screen.o $(UTILS_SRC)
 
 # Nettoyage
-clean:
-	rm -f *.o $(KERNEL_BIN) $(ISO_DIR)/my-kernel.iso
+clean:	
+	rm -f *.o kernel/*.o kernel/utils/*.o $(KERNEL_BIN) $(ISO_DIR)/my-kernel.iso
 
-re: clean run
+re: clean all

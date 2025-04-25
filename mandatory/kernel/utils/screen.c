@@ -1,7 +1,6 @@
 #include "screen.h"
 
 unsigned short* screen_buffer;
-unsigned short* screen_buffer_saved;
 unsigned int cursor_index = 0;
 
 int print_char(char c, unsigned char color)

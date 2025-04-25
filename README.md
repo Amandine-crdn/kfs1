@@ -107,3 +107,5 @@ Crée l'image ISO à la fin
 
 qemu-system-x86_64 -cdrom iso/my-kernel.iso -m 512 -smp 2
 qemu-system-i386 -boot d -cdrom ./iso/my-kernel.iso -m 512
+du -hd1 iso/my-kernel.iso 
+

@@ -38,7 +38,7 @@ void	ft_choice_u(t_sc *sc, va_list arg)
 	}
 }
 
-char const	*ft_read_text(char const *format, t_sc *sc)
+char const	*ft_read_text(const char *format, t_sc *sc)
 {
 	char	*next;
 
@@ -77,14 +77,8 @@ char const	*ft_read_arg(char const *format, t_sc *sc, va_list arg)
 	return (format);
 }
 
-int	kprintf(char *format, ...)
+int	kprintf(const char *format, ...)
 {
-	// va_list	arg2;
-	// va_start(arg2, format);
-	// print_char(va_arg(arg2, char), WHITE);
-	// print_char(va_arg(arg2, char), WHITE);
-	// va_end(arg2);
-	// return 0;
 	t_sc	sc;
 	va_list	arg;
 
